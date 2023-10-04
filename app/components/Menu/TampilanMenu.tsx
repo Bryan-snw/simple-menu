@@ -32,7 +32,7 @@ const TampilanMenu = () => {
     ]);
 
     function handleDelete() {
-        
+        alert("Hapus");
     }
     
 
@@ -77,7 +77,7 @@ const TampilanMenu = () => {
                         <td>{menu.id}</td>
                         <td>{menu.nama}</td>
                         <td>{rupiah(menu.harga)}</td>
-                        <td><span className="cursor-pointer"onClick={handleDelete}>Hapus</span></td>
+                        <td><span className="cursor-pointer text-sm bg-red-600 hover:bg-red-700 px-2 text-white rounded-md"onClick={handleDelete}>Hapus</span></td>
                     </tr>
                 )}
             </tbody>
@@ -107,7 +107,7 @@ const TampilanMenu = () => {
                     onChange={(e)=>setHargaMakanan(parseInt(e.target.value))}
                 />
             </div>
-            <button type='submit' className="mt-1 w-full bg-green-500 hover:bg-green-600 py-2 text-white font-semibold rounded-xl">Tambah Menu</button>
+            <button type='submit' className="mt-1 w-full bg-green-600 hover:bg-green-700 py-2 text-white font-semibold rounded-xl">Tambah Menu</button>
         </form>
     </>
   )
