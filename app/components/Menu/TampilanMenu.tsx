@@ -19,17 +19,17 @@ const TampilanMenu = (props:any) => {
     // Default Menu
     const defaultMenu:Menu[] = [
       {
-          id: 1,
+          id: 283131,
           nama: "Nasi Goreng",
           harga: 20000
       },
       {
-          id: 2,
+          id: 982132,
           nama: "Mie Goreng",
           harga: 22000
       },
       {
-          id: 3,
+          id: 271822,
           nama: "Ayam Goreng",
           harga: 15000
       },
@@ -76,7 +76,7 @@ const TampilanMenu = (props:any) => {
         const updatedData = [...menuList];
 
         const data = {
-          id: updatedData.length + 1,
+          id: Math.floor(100000 + Math.random() * 900000),
           nama: namaMakanan,
           harga: hargaMakanan
         }
@@ -92,15 +92,16 @@ const TampilanMenu = (props:any) => {
       e.preventDefault();
       const updatedData = [...menuList];
 
-      updatedData.splice(id-1, 1);
-
+      updatedData.splice(id, 1);
+      
+      
       setMenuList(updatedData);
         
     }
       
 
   return (
-    <>
+    <div className="p-5 mt-4 bg-slate-200 rounded-md">
         <table className="w-full">
             <thead>
             <tr>
@@ -148,7 +149,7 @@ const TampilanMenu = (props:any) => {
             </div>
             <button type='submit' className="mt-1 w-full bg-green-600 hover:bg-green-700 py-2 text-white font-semibold rounded-xl">Tambah Menu</button>
         </form>
-    </>
+    </div>
   )
 }
 

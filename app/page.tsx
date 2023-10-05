@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 
 export default function Home() {
 
-  const [type, setType] = useState('menu');
+  const [type, setType] = useState('order');
   const [reset, setReset] = useState(false);
 
   function renderView(){
@@ -57,9 +57,9 @@ export default function Home() {
 
       </div>
 
-        <div className="p-5 mt-4 bg-slate-200 rounded-md">
+        {/* <div className=" h-96 p-5 mt-4 bg-slate-200 rounded-md"> */}
           {renderView()}
-        </div>
+        {/* </div> */}
     </main>
   )
 }
