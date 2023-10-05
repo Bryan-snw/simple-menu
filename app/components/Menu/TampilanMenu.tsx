@@ -37,7 +37,7 @@ const TampilanMenu = (props:any) => {
     
     const [namaMakanan,setNamaMakanan] = useState("");
     const [hargaMakanan,setHargaMakanan] = useState(0);  
-    const [menuList, setMenuList] = useState<Menu[]>(JSON.parse(localStorage.getItem('MENU') || 'null'));  
+    const [menuList, setMenuList] = useState<Menu[]>(JSON.parse(localStorage.getItem('MENU') || '[]'));  
 
     useEffect(() => {
 

@@ -12,8 +12,8 @@ const TampilanOrder = () => {
   const [jumlah, setJumlah] = useState(0);
   const [menuId, setMenuId] = useState(0);
   
-  const menuList:Menu[] = JSON.parse(localStorage.getItem('MENU') || 'null');
-  const [orderList, setOrderList] = useState(JSON.parse(localStorage.getItem('MENU') || 'null'));
+  const menuList:Menu[] = JSON.parse(localStorage.getItem('MENU') || '[]');
+  const [orderList, setOrderList] = useState(JSON.parse(localStorage.getItem('MENU') || '[]'));
 
 
   useEffect(() => {

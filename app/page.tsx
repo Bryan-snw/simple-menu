@@ -6,9 +6,35 @@ import TampilanDapur from './components/Dapur/TampilanDapur';
 import { useState, useEffect } from 'react';
 
 
+interface Menu {
+  id: number,
+  nama: string,
+  harga: number
+}
+
+
 export default function Home() {
 
-  const [type, setType] = useState('order');
+      // Default Menu
+      const defaultMenu:Menu[] = [
+        {
+            id: 283131,
+            nama: "Nasi Goreng",
+            harga: 20000
+        },
+        {
+            id: 982132,
+            nama: "Mie Goreng",
+            harga: 22000
+        },
+        {
+            id: 271822,
+            nama: "Ayam Goreng",
+            harga: 15000
+        },
+      ]  
+
+  const [type, setType] = useState('dapur');
   const [reset, setReset] = useState(false);
 
   function renderView(){
@@ -21,7 +47,10 @@ export default function Home() {
       case 'order':
         return <TampilanOrder />
       case 'dapur':
-        return <TampilanDapur />
+        return <TampilanDapur 
+          reset={reset}
+          setReset={setReset}
+        />
       case 'kasir':
         return <TampilanKasir />
     }
@@ -34,7 +63,10 @@ export default function Home() {
 
   function handleReset(e:React.FormEvent){
     e.preventDefault();
-    console.log("reset");
+    console.log("Reset From Home");
+    localStorage.clear();
+    localStorage.setItem('MENU', JSON.stringify(defaultMenu));
+
     setReset(true);
   }
 
