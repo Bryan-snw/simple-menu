@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+
+interface Menu {
+  id: number,
+  nama: string,
+  harga: number
+}
 
 
 const rupiah = (number: number) =>{
@@ -7,58 +13,91 @@ const rupiah = (number: number) =>{
       currency: "IDR"
     }).format(number);
   }
+  
+const TampilanMenu = (props:any) => {
 
-const TampilanMenu = () => {
-
-    const [namaMakanan,setNamaMakanan] = useState("");
-    const [hargaMakanan,setHargaMakanan] = useState(0);
-
-    const [menuList, setMenuList] = useState([
-        {
-            id: 1,
-            nama: "Nasi Goreng",
-            harga: 20000
-        },
-        {
-            id: 2,
-            nama: "Mie Goreng",
-            harga: 22000
-        },
-        {
-            id: 3,
-            nama: "Ayam Goreng",
-            harga: 15000
-        },
-    ]);
-
-    function handleDelete() {
-        alert("Hapus");
-    }
+    // Default Menu
+    const defaultMenu:Menu[] = [
+      {
+          id: 1,
+          nama: "Nasi Goreng",
+          harga: 20000
+      },
+      {
+          id: 2,
+          nama: "Mie Goreng",
+          harga: 22000
+      },
+      {
+          id: 3,
+          nama: "Ayam Goreng",
+          harga: 15000
+      },
+    ]  
     
+    const [namaMakanan,setNamaMakanan] = useState("");
+    const [hargaMakanan,setHargaMakanan] = useState(0);  
+    const [menuList, setMenuList] = useState<Menu[]>(JSON.parse(localStorage.getItem('MENU') || 'null'));  
 
-    function handleAddMenu(e: any){
-        e.preventDefault();
+    useEffect(() => {
 
-        if (namaMakanan === "") {
-            alert("Data Masih Kosong");
+      if (props.reset) {
+        // Clear Local Storange
+        localStorage.clear();
+        // Set Reset back to false
+        props.setReset(false);
+
+        // Get Item from local Storage
+        const storedMenu = JSON.parse(localStorage.getItem('MENU') || 'null');
+
+        // if there is no local Storage
+        if (!storedMenu) {
+          // Set Local Storange
+          localStorage.setItem('MENU', JSON.stringify(defaultMenu));
+          setMenuList(defaultMenu);
         } else {
-
-            const updatedData = [...menuList];
-
-            const data = {
-                id: menuList.length+1,
-                nama: namaMakanan,
-                harga: hargaMakanan
-            }
-
-            updatedData.push(data);
-
-            setMenuList(updatedData);
-            setHargaMakanan(0);
-            setNamaMakanan("")
+          setMenuList(storedMenu);
         }
+        
+      }
+    }, [props.reset]);
+    
+    useEffect(() => {
+      localStorage.setItem('MENU', JSON.stringify(menuList));
+    }, [menuList])
+    
+   
+    function handleAddMenu(e:React.FormEvent) {
+      e.preventDefault();
 
+      if (!namaMakanan) {
+        alert("Data Masih Kosong");
+      } else {
+        const updatedData = [...menuList];
+
+        const data = {
+          id: updatedData.length + 1,
+          nama: namaMakanan,
+          harga: hargaMakanan
+        }
+        updatedData.push(data)
+        
+        setMenuList(updatedData);
+        setHargaMakanan(0);
+        setNamaMakanan("");
+      }
     }
+
+    function handleDelete(e:React.FormEvent, id:number) {
+      e.preventDefault();
+      const updatedData = [...menuList];
+
+      updatedData.splice(id-1, 1);
+
+      setMenuList(updatedData);
+        
+    }
+      
 
   return (
     <>
@@ -72,12 +111,12 @@ const TampilanMenu = () => {
                 </tr>
             </thead>
             <tbody>
-                {menuList.map(menu => 
+                {menuList.map((menu, index) => 
                     <tr key={menu.id}>
                         <td>{menu.id}</td>
                         <td>{menu.nama}</td>
                         <td>{rupiah(menu.harga)}</td>
-                        <td><span className="cursor-pointer text-sm bg-red-600 hover:bg-red-700 px-2 text-white rounded-md"onClick={handleDelete}>Hapus</span></td>
+                        <td><span className="cursor-pointer text-sm bg-red-600 hover:bg-red-700 px-2 text-white rounded-md"onClick={(e)=>handleDelete(e,index)}>Hapus</span></td>
                     </tr>
                 )}
             </tbody>

@@ -1,26 +1,29 @@
 'use client';
-import Image from 'next/image'
 import TampilanMenu from './components/Menu/TampilanMenu';
-import TampilanMeja from './components/Meja/TampilanMeja';
-import TampilanNota from './components/Nota/TampilanNota';
-import TampilanPesanan from './components/Pesanan/TampilanPesanan';
-import { useState } from 'react';
+import TampilanOrder from './components/Order/TampilanOrder';
+import TampilanKasir from './components/Kasir/TampilanKasir';
+import TampilanDapur from './components/Dapur/TampilanDapur';
+import { useState, useEffect } from 'react';
 
 
 export default function Home() {
 
   const [type, setType] = useState('menu');
+  const [reset, setReset] = useState(false);
 
   function renderView(){
     switch (type) {
       case 'menu':
-        return <TampilanMenu />;
-      case 'meja':
-        return <TampilanMeja />
-      case 'pesanan':
-        return <TampilanPesanan />
-      case 'nota':
-        return <TampilanNota />
+        return <TampilanMenu 
+          reset={reset}
+          setReset={setReset}
+        />;
+      case 'order':
+        return <TampilanOrder />
+      case 'dapur':
+        return <TampilanDapur />
+      case 'kasir':
+        return <TampilanKasir />
     }
   }
 
@@ -29,19 +32,34 @@ export default function Home() {
     setType(type);
   }
 
+  function handleReset(e:React.FormEvent){
+    e.preventDefault();
+    console.log("reset");
+    setReset(true);
+  }
+
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <div className="grid bg-slate-200 w-full mx-auto lg:px-32 py-10 px-8 rounded-lg">
-        <div className="flex gap-3 mb-3">
-          <button onClick={()=>changeView('menu')} className='p-3 bg-blue-500 hover:bg-blue-700 text-white rounded-lg'>Menu</button>
-          <button onClick={()=>changeView('meja')} className='p-3 bg-blue-500 hover:bg-blue-700 text-white rounded-lg'>Meja</button>
-          <button onClick={()=>changeView('pesanan')} className='p-3 bg-blue-500 hover:bg-blue-700 text-white rounded-lg'>Pesanan Aktif</button>
-          <button onClick={()=>changeView('nota')} className='p-3 bg-blue-500 hover:bg-blue-700 text-white rounded-lg'>Cetak Nota</button>
+    <main className="p-8">
+      <h1 className="text-3xl font-semibold">Sistem Menu</h1>
+      <div className="grid grid-cols-6 mt-4">
+
+        <div className="col-span-4 grid grid-cols-4 bg-slate-200 rounded-md p-1">
+          <button onClick={()=>changeView('menu')} className={`${type === 'menu' ? 'bg-slate-50' : 'text-slate-500'} py-1 rounded-md`}>Menu</button>
+          <button onClick={()=>changeView('order')} className={`${type === 'order' ? 'bg-slate-50' : 'text-slate-500'} py-1 rounded-md`}>Order</button>
+          <button onClick={()=>changeView('dapur')} className={`${type === 'dapur' ? 'bg-slate-50' : 'text-slate-500'} py-1 rounded-md`}>Dapur</button>
+          <button onClick={()=>changeView('kasir')} className={`${type === 'kasir' ? 'bg-slate-50' : 'text-slate-500'} py-1 rounded-md`}>Kasir</button>
         </div>
-        <div>
+
+        <div className="col-span-2 grid grid-cols-2">
+          <span></span>
+          <button onClick={(e)=>handleReset(e)} className='py-1 hover:bg-slate-200 border-solid border border-slate-200 rounded-md'>Reset</button>
+        </div>
+
+      </div>
+
+        <div className="p-5 mt-4 bg-slate-200 rounded-md">
           {renderView()}
         </div>
-      </div>
     </main>
   )
 }
