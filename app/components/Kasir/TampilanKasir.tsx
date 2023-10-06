@@ -1,24 +1,6 @@
 import React, { useState, useEffect } from 'react'
-
-interface Order {
-  id: number,
-  menuId: number,
-  mejaId: number,
-  jumlah: number
-}
-
-interface Menu {
-  id: number,
-  nama: string,
-  harga: number
-}
-
-const rupiah = (number: number) =>{
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR"
-  }).format(number);
-}
+import rupiah from '@/app/utils/rupiah'
+import { Order, Menu } from '@/app/utils/type'
 
 function checkActiveTable(existOrders:any){
   let obj:any = {};

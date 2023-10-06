@@ -1,41 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import rupiah from '@/app/utils/rupiah'
+import { Menu } from '@/app/utils/type'
 
-interface Menu {
-  id: number,
-  nama: string,
-  harga: number
-}
-
-
-const rupiah = (number: number) =>{
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR"
-    }).format(number);
-  }
   
 const TampilanMenu = (props:any) => {
 
   const {reset , setReset} = props;
-
-    // Default Menu
-    const defaultMenu:Menu[] = [
-      {
-          id: 283131,
-          nama: "Nasi Goreng",
-          harga: 20000
-      },
-      {
-          id: 982132,
-          nama: "Mie Goreng",
-          harga: 22000
-      },
-      {
-          id: 271822,
-          nama: "Ayam Goreng",
-          harga: 15000
-      },
-    ]  
     
     const [namaMakanan,setNamaMakanan] = useState("");
     const [hargaMakanan,setHargaMakanan] = useState(0);  

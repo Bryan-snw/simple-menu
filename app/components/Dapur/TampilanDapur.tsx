@@ -1,18 +1,5 @@
 import React, { useEffect, useState } from 'react'
-
-
-interface Order {
-  id: number,
-  menuId: number,
-  mejaId: number,
-  jumlah: number
-}
-
-interface Menu {
-  id: number,
-  nama: string,
-  harga: number
-}
+import { Order, Menu } from '@/app/utils/type'
 
 const TampilanDapur = (props:any) => {
 

@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react'
-
-interface Menu {
-  id: number,
-  nama: string,
-  harga: number
-}
+import { Menu } from '@/app/utils/type'
 
 const TampilanOrder = () => {
 
@@ -14,7 +9,6 @@ const TampilanOrder = () => {
   
   const menuList:Menu[] = JSON.parse(localStorage.getItem('MENU') || '[]');
   const [orderList, setOrderList] = useState(JSON.parse(localStorage.getItem('ORDER') || '[]'));
-
 
   useEffect(() => {
 
