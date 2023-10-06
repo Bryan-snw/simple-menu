@@ -34,7 +34,7 @@ export default function Home() {
         },
       ]  
 
-  const [type, setType] = useState('dapur');
+  const [type, setType] = useState('kasir');
   const [reset, setReset] = useState(false);
 
   function renderView(){

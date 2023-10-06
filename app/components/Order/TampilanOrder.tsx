@@ -13,7 +13,7 @@ const TampilanOrder = () => {
   const [menuId, setMenuId] = useState(0);
   
   const menuList:Menu[] = JSON.parse(localStorage.getItem('MENU') || '[]');
-  const [orderList, setOrderList] = useState(JSON.parse(localStorage.getItem('MENU') || '[]'));
+  const [orderList, setOrderList] = useState(JSON.parse(localStorage.getItem('ORDER') || '[]'));
 
 
   useEffect(() => {
