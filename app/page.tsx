@@ -34,8 +34,13 @@ export default function Home() {
         },
   ]  
 
-  const [type, setType] =  useState(() => sessionStorage.getItem('lastType') || 'menu');
   const [reset, setReset] = useState(false);
+  const [type, setType] =  useState('menu');
+
+  useEffect(() => {
+    setType(sessionStorage.getItem('lastType') || 'menu');
+  }, [])
+  
 
   useEffect(() => {
     sessionStorage.setItem('lastType', type);

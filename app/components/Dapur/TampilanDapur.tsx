@@ -5,8 +5,22 @@ const TampilanDapur = (props:any) => {
 
   const {reset, setReset} = props;
 
-  const [menuList, setMenuList] = useState<Menu[]>(JSON.parse(localStorage.getItem('MENU') || "[]")); 
-  const [orderList, setOrderList] = useState<Order[]>(JSON.parse(localStorage.getItem('ORDER') || "[]")); 
+  const [menuList, setMenuList] = useState<Menu[]>([]); 
+  const [orderList, setOrderList] = useState<Order[]>([]); 
+
+  useEffect(() => {
+
+    const dataMenu = localStorage.getItem('MENU');
+    if (dataMenu) {
+      setMenuList(JSON.parse(dataMenu));
+    }
+
+    const dataOrder = localStorage.getItem('ORDER');
+    if (dataOrder) {
+      setOrderList(JSON.parse(dataOrder));
+    }
+
+  }, [])
 
   useEffect(() => {
 

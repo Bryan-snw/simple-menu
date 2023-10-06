@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Menu } from '@/app/utils/type'
+import { Menu, Order } from '@/app/utils/type'
 
 const TampilanOrder = () => {
 
@@ -7,21 +7,20 @@ const TampilanOrder = () => {
   const [jumlah, setJumlah] = useState(0);
   const [menuId, setMenuId] = useState(0);
   
-  const menuList:Menu[] = JSON.parse(localStorage.getItem('MENU') || '[]');
-  const [orderList, setOrderList] = useState(JSON.parse(localStorage.getItem('ORDER') || '[]'));
+  const [menuList, setMenuList] = useState<Menu[]>([]);  
+  const [orderList, setOrderList] = useState<Order[]>([]);
 
   useEffect(() => {
 
-    const storedOrder = JSON.parse(localStorage.getItem('ORDER') || 'null');
+    const dataMenu = localStorage.getItem('MENU');
+    if (dataMenu) {
+      setMenuList(JSON.parse(dataMenu));
+    }
 
-        // if there is no local Storage
-        if (!storedOrder) {
-          // Set Local Storange
-          localStorage.setItem('ORDER', JSON.stringify([]));
-          setOrderList([]);
-        } else {
-          setOrderList(storedOrder);
-        }
+    const dataOrder = localStorage.getItem('ORDER');
+    if (dataOrder) {
+      setOrderList(JSON.parse(dataOrder));
+    }
 
   }, [])
   

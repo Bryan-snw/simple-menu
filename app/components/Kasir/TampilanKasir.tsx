@@ -20,10 +20,24 @@ const TampilanKasir = (props:any) => {
 
   const [isPrint, setIsPrint] = useState(false);
   const [nomorMeja, setNomorMeja] = useState(0);
-  const [orderList, setOrderList] = useState<Order[]>(JSON.parse(localStorage.getItem('ORDER') || "[]")); 
-  const [menuList, setMenuList] = useState<Menu[]>(JSON.parse(localStorage.getItem('MENU') || "[]")); 
+  const [orderList, setOrderList] = useState<Order[]>([]); 
+  const [menuList, setMenuList] = useState<Menu[]>([]); 
   let totalHarga = 0;
   let item = 0;
+
+  useEffect(() => {
+
+    const dataMenu = localStorage.getItem('MENU');
+    if (dataMenu) {
+      setMenuList(JSON.parse(dataMenu));
+    }
+
+    const dataOrder = localStorage.getItem('ORDER');
+    if (dataOrder) {
+      setOrderList(JSON.parse(dataOrder));
+    }
+
+  }, [])
 
   const activeTables = checkActiveTable(orderList);
 
