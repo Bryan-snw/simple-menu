@@ -15,8 +15,8 @@ interface Menu {
 
 export default function Home() {
 
-      // Default Menu
-      const defaultMenu:Menu[] = [
+  // Default Menu
+  const defaultMenu:Menu[] = [
         {
             id: 283131,
             nama: "Nasi Goreng",
@@ -32,10 +32,14 @@ export default function Home() {
             nama: "Ayam Goreng",
             harga: 15000
         },
-      ]  
+  ]  
 
-  const [type, setType] = useState('kasir');
+  const [type, setType] =  useState(() => sessionStorage.getItem('lastType') || 'kasir');
   const [reset, setReset] = useState(false);
+
+  useEffect(() => {
+    sessionStorage.setItem('lastType', type);
+  }, [type]);
 
   function renderView(){
     switch (type) {
