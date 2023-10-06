@@ -16,6 +16,8 @@ const rupiah = (number: number) =>{
   
 const TampilanMenu = (props:any) => {
 
+  const {reset , setReset} = props;
+
     // Default Menu
     const defaultMenu:Menu[] = [
       {
@@ -39,28 +41,40 @@ const TampilanMenu = (props:any) => {
     const [hargaMakanan,setHargaMakanan] = useState(0);  
     const [menuList, setMenuList] = useState<Menu[]>(JSON.parse(localStorage.getItem('MENU') || '[]'));  
 
+    // useEffect(() => {
+
+    //   if (props.reset) {
+    //     // Clear Local Storange
+    //     localStorage.clear();
+    //     // Set Reset back to false
+    //     props.setReset(false);
+
+    //     // Get Item from local Storage
+    //     const storedMenu = JSON.parse(localStorage.getItem('MENU') || '[]');
+
+    //     // if there is no local Storage
+    //     if (!storedMenu) {
+    //       // Set Local Storange
+    //       localStorage.setItem('MENU', JSON.stringify(defaultMenu));
+    //       setMenuList(defaultMenu);
+    //     } else {
+    //       setMenuList(storedMenu);
+    //     }
+        
+    //   }
+    // }, [props.reset]);
+
     useEffect(() => {
 
-      if (props.reset) {
-        // Clear Local Storange
-        localStorage.clear();
+      if (reset) {
         // Set Reset back to false
-        props.setReset(false);
-
+        setReset(false);
+  
         // Get Item from local Storage
-        const storedMenu = JSON.parse(localStorage.getItem('MENU') || 'null');
-
-        // if there is no local Storage
-        if (!storedMenu) {
-          // Set Local Storange
-          localStorage.setItem('MENU', JSON.stringify(defaultMenu));
-          setMenuList(defaultMenu);
-        } else {
-          setMenuList(storedMenu);
-        }
+        setMenuList(JSON.parse(localStorage.getItem('MENU')||"[]"));
         
       }
-    }, [props.reset]);
+    }, [reset, setReset]);
     
     useEffect(() => {
       localStorage.setItem('MENU', JSON.stringify(menuList));

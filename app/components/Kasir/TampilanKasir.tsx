@@ -33,7 +33,9 @@ function checkActiveTable(existOrders:any){
   return Object.keys(obj);
 }
 
-const TampilanKasir = () => {
+const TampilanKasir = (props:any) => {
+  const {reset, setReset} = props;
+
   const [isPrint, setIsPrint] = useState(false);
   const [nomorMeja, setNomorMeja] = useState(0);
   const [orderList, setOrderList] = useState<Order[]>(JSON.parse(localStorage.getItem('ORDER') || "[]")); 
@@ -41,6 +43,21 @@ const TampilanKasir = () => {
   let totalHarga = 0;
 
   const activeTables = checkActiveTable(orderList);
+
+  useEffect(() => {
+
+    if (reset) {
+
+      // Set Reset
+      setReset(false);
+      setNomorMeja(0);
+      setIsPrint(false);
+
+      // Get Item from local Storage
+      setOrderList(JSON.parse(localStorage.getItem('ORDER')||"[]"));
+      
+    }
+  }, [reset, setReset]);
 
   useEffect(() => {
     localStorage.setItem('ORDER', JSON.stringify(orderList));

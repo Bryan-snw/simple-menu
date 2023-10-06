@@ -52,7 +52,10 @@ export default function Home() {
           setReset={setReset}
         />
       case 'kasir':
-        return <TampilanKasir />
+        return <TampilanKasir 
+          reset={reset}
+          setReset={setReset}
+        />
     }
   }
 
@@ -66,6 +69,7 @@ export default function Home() {
     console.log("Reset From Home");
     localStorage.clear();
     localStorage.setItem('MENU', JSON.stringify(defaultMenu));
+    localStorage.setItem('ORDER', JSON.stringify([]));
 
     setReset(true);
   }

@@ -16,35 +16,23 @@ interface Menu {
 
 const TampilanDapur = (props:any) => {
 
-  // const dataOrder = localStorage.getItem('ORDER');
-  // let orderList:Order[] = []
-  // if (dataOrder) {
-  //   orderList =  JSON.parse(dataOrder);
-  // };
+  const {reset, setReset} = props;
 
   const [menuList, setMenuList] = useState<Menu[]>(JSON.parse(localStorage.getItem('MENU') || "[]")); 
   const [orderList, setOrderList] = useState<Order[]>(JSON.parse(localStorage.getItem('ORDER') || "[]")); 
 
-  // const dataMenu = localStorage.getItem('MENU');
-  // let menuList:Menu[] = []
-  // if (dataMenu) {
-  //   menuList =  JSON.parse(dataMenu);
-  // };
-
   useEffect(() => {
 
-    if (props.reset) {
-      // Clear Local Storange
-      // localStorage.clear();
+    if (reset) {
+
       // Set Reset back to false
-      props.setReset(false);
+      setReset(false);
 
       // Get Item from local Storage
-      
       setOrderList(JSON.parse(localStorage.getItem('ORDER')||"[]"));
       
     }
-  }, [props.reset]);
+  }, [reset, setReset]);
 
   function renderMeja1(){
     const meja1 = []
