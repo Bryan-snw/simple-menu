@@ -23,6 +23,7 @@ const TampilanKasir = (props:any) => {
   const [orderList, setOrderList] = useState<Order[]>(JSON.parse(localStorage.getItem('ORDER') || "[]")); 
   const [menuList, setMenuList] = useState<Menu[]>(JSON.parse(localStorage.getItem('MENU') || "[]")); 
   let totalHarga = 0;
+  let item = 0;
 
   const activeTables = checkActiveTable(orderList);
 
@@ -48,11 +49,13 @@ const TampilanKasir = (props:any) => {
   function renderStruk(){
     let orders:any = [];
     totalHarga = 0;
+    item = 0;
     for (let index = 0; index < orderList.length; index++) {
       const order = orderList[index];
       if (order.mejaId === nomorMeja) {
         const menu = menuList.find(menu => menu.id === order.menuId);
         if (menu){
+          item++;
           totalHarga += menu.harga*order.jumlah;
           orders.push(<tr key={index}>
             <td>{order.jumlah}</td>
@@ -79,8 +82,6 @@ const TampilanKasir = (props:any) => {
   
     }
 
-    console.log("Updet Data ",updatedData);
-
     setOrderList(updatedData);
     
     setNomorMeja(0);
@@ -93,7 +94,7 @@ const TampilanKasir = (props:any) => {
   }
 
   return (
-    <div className=" h-96 p-5 mt-4 bg-slate-200 rounded-md">
+  <div className={`min-h-[24rem] h-auto p-5 mt-4 bg-slate-200 rounded-md`} >
       <label htmlFor="meja">Meja</label>
 
       <div className="grid grid-cols-4 mt-2">
@@ -118,7 +119,7 @@ const TampilanKasir = (props:any) => {
         {nomorMeja === 0 ? 
           "" 
         : 
-          (<button onClick={handleEmptyTable} className="bg-red-600 hover:bg-red-700 py-2 text-white font-semibold rounded-xl">Kosongkan</button>)
+          (<button onClick={handleEmptyTable} className="bg-red-600 hover:bg-red-700 py-2 text-white font-semibold rounded-xl">Clear</button>)
         }
         
       </div>

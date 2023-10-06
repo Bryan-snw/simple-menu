@@ -63,14 +63,13 @@ export default function Home() {
     }
   }
 
-  function changeView(type: string){
-    
+  function changeView(type: string){  
     setType(type);
   }
 
   function handleReset(e:React.FormEvent){
     e.preventDefault();
-    console.log("Reset From Home");
+    
     localStorage.clear();
     localStorage.setItem('MENU', JSON.stringify(defaultMenu));
     localStorage.setItem('ORDER', JSON.stringify([]));
@@ -79,7 +78,7 @@ export default function Home() {
   }
 
   return (
-    <main className="p-8">
+    <main className="p-8 lg:w-2/4">
       <h1 className="text-3xl font-semibold">Sistem Menu</h1>
       <div className="grid grid-cols-6 mt-4">
 
@@ -97,9 +96,8 @@ export default function Home() {
 
       </div>
 
-        {/* <div className=" h-96 p-5 mt-4 bg-slate-200 rounded-md"> */}
-          {renderView()}
-        {/* </div> */}
+      {renderView()}
+        
     </main>
   )
 }
