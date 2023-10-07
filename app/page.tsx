@@ -4,16 +4,12 @@ import TampilanOrder from './components/Order/TampilanOrder';
 import TampilanKasir from './components/Kasir/TampilanKasir';
 import TampilanDapur from './components/Dapur/TampilanDapur';
 import { useState, useEffect } from 'react';
-
-
-interface Menu {
-  id: number,
-  nama: string,
-  harga: number
-}
+import { Menu,Order } from './utils/type';
 
 
 export default function Home() {
+
+
 
   // Default Menu
   const defaultMenu:Menu[] = [
@@ -36,34 +32,106 @@ export default function Home() {
 
   const [reset, setReset] = useState(false);
   const [type, setType] =  useState('menu');
-
-  useEffect(() => {
-    setType(sessionStorage.getItem('lastType') || 'menu');
-  }, [])
+  const [menuList, setMenuList] = useState<Menu[]>(defaultMenu);  
+  const [orderList, setOrderList] = useState<Order[]>([]);
+  // const [type, setType] =  useState(sessionStorage.getItem('lastType') || 'menu');
+  // const [menuList, setMenuList] = useState<Menu[]>(JSON.parse(localStorage.getItem('MENU')||'[]'));  
+  // const [orderList, setOrderList] = useState<Order[]>(JSON.parse(localStorage.getItem('ORDER')||'[]'));
   
 
-  useEffect(() => {
-    sessionStorage.setItem('lastType', type);
-  }, [type]);
 
+
+  useEffect(()=>{
+    console.log("UseEffect Get LocalStorage");
+    
+    // Handle MenuList
+    const dataMenu = localStorage.getItem('MENU');
+    console.log("Data Menu",dataMenu);
+    
+    if (dataMenu) {
+      console.log("Masuk");
+      setMenuList(JSON.parse(dataMenu));
+    }
+
+    // Handle OrderList
+    const dataOrder = localStorage.getItem('ORDER');
+    console.log("Data Order",dataOrder);
+    
+    if (dataOrder) {
+      console.log("Masuk");
+      setOrderList(JSON.parse(dataOrder));
+    }
+
+    // Handle type Dynamic Render Component
+    const dataType = sessionStorage.getItem('TYPE');
+    console.log("Data Type",dataType);
+    
+    if (dataType) {
+      console.log("Masuk");
+      setType(dataType);
+    }
+  },[])
+
+  useEffect(()=>{
+    console.log("UseEffect Set LocalStorage");
+    console.log("Dat MenuList", menuList);
+    
+    setTimeout(() => {
+      localStorage.setItem('MENU', JSON.stringify(menuList));
+    }, 0);
+
+    console.log("LocalStorage Set",localStorage.getItem('MENU'));
+  },[menuList])
+
+  useEffect(()=>{
+    console.log("UseEffect Set LocalStorage");
+    console.log("Dat ORDER List", orderList);
+    
+    setTimeout(() => {
+      localStorage.setItem('ORDER', JSON.stringify(orderList));
+    }, 0);
+
+    console.log("LocalStorage Set",localStorage.getItem('ORDER'));
+  },[orderList])
+
+  useEffect(()=>{
+    console.log("UseEffect Set LocalStorage");
+    console.log("Dat ORDER List", type);
+    
+    setTimeout(() => {
+      sessionStorage.setItem('TYPE', type);
+    }, 0);
+
+    console.log("LocalStorage Set",sessionStorage.getItem('TYPE'));
+  },[type])
+
+  useEffect(()=>{
+    setReset(false);
+  },[reset])
+  
   function renderView(){
     switch (type) {
       case 'menu':
         return <TampilanMenu 
-          reset={reset}
-          setReset={setReset}
+          menuList={menuList}
+          setMenuList={setMenuList}
         />;
       case 'order':
-        return <TampilanOrder />
+        return <TampilanOrder
+        menuList={menuList}
+        orderList={orderList}
+        setOrderList={setOrderList}
+        />
       case 'dapur':
         return <TampilanDapur 
-          reset={reset}
-          setReset={setReset}
+          menuList={menuList}
+          orderList={orderList} 
         />
       case 'kasir':
         return <TampilanKasir 
-          reset={reset}
-          setReset={setReset}
+          menuList={menuList}
+          orderList={orderList}
+          setOrderList={setOrderList}
         />
     }
   }
@@ -74,11 +142,11 @@ export default function Home() {
 
   function handleReset(e:React.FormEvent){
     e.preventDefault();
+    console.log("reset home");
     
     localStorage.clear();
-    localStorage.setItem('MENU', JSON.stringify(defaultMenu));
-    localStorage.setItem('ORDER', JSON.stringify([]));
-
+    setMenuList(defaultMenu);
+    setOrderList([]);
     setReset(true);
   }
 
@@ -106,3 +174,4 @@ export default function Home() {
     </main>
   )
 }
+

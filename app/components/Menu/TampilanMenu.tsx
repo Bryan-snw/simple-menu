@@ -2,38 +2,18 @@ import React, { useState, useEffect } from 'react'
 import rupiah from '@/app/utils/rupiah'
 import { Menu } from '@/app/utils/type'
 
+interface AppProps {
+  menuList: Menu[];
+
+  setMenuList:any;
+}
   
-const TampilanMenu = (props:any) => {
-
-  const {reset , setReset} = props;
-
+const TampilanMenu = ({menuList, setMenuList}:AppProps) => {
+    
     const [namaMakanan,setNamaMakanan] = useState("");
     const [hargaMakanan,setHargaMakanan] = useState(0);  
-    const [menuList, setMenuList] = useState<Menu[]>([]);  
-    
-    useEffect(() => {
-      const dataMenu = localStorage.getItem('MENU');
-      if (dataMenu) {
-        setMenuList(JSON.parse(dataMenu));
-      }
-    }, [])
-  
+      
 
-    useEffect(() => {
-
-      if (reset) {
-        // Set Reset back to false
-        setReset(false);
-  
-        // Get Item from local Storage
-        setMenuList(JSON.parse(localStorage.getItem('MENU')||"[]"));
-        
-      }
-    }, [reset, setReset]);
-    
-    useEffect(() => {
-      localStorage.setItem('MENU', JSON.stringify(menuList));
-    }, [menuList])
     
    
     function handleAddMenu(e:React.FormEvent) {
@@ -62,8 +42,7 @@ const TampilanMenu = (props:any) => {
       const updatedData = [...menuList];
 
       updatedData.splice(id, 1);
-      
-      
+    
       setMenuList(updatedData);
         
     }

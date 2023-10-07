@@ -1,39 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Order, Menu } from '@/app/utils/type'
 
-const TampilanDapur = (props:any) => {
+interface AppProps {
+  menuList: Menu[];
+  orderList: Order[];
+}
 
-  const {reset, setReset} = props;
+const TampilanDapur = ({menuList,orderList}:AppProps) => {
 
-  const [menuList, setMenuList] = useState<Menu[]>([]); 
-  const [orderList, setOrderList] = useState<Order[]>([]); 
 
-  useEffect(() => {
-
-    const dataMenu = localStorage.getItem('MENU');
-    if (dataMenu) {
-      setMenuList(JSON.parse(dataMenu));
-    }
-
-    const dataOrder = localStorage.getItem('ORDER');
-    if (dataOrder) {
-      setOrderList(JSON.parse(dataOrder));
-    }
-
-  }, [])
-
-  useEffect(() => {
-
-    if (reset) {
-
-      // Set Reset back to false
-      setReset(false);
-
-      // Get Item from local Storage
-      setOrderList(JSON.parse(localStorage.getItem('ORDER')||"[]"));
-      
-    }
-  }, [reset, setReset]);
 
   function renderMeja1(){
     const meja1 = []

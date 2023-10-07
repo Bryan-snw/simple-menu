@@ -1,29 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { Menu, Order } from '@/app/utils/type'
 
-const TampilanOrder = () => {
+interface AppProps {
+  menuList: Menu[];
+  orderList: Order[];
+  setOrderList:any;
+}
+
+const TampilanOrder = ({menuList, orderList, setOrderList}:AppProps) => {
 
   const [orderId, setOrderId] = useState(0);
   const [jumlah, setJumlah] = useState(0);
   const [menuId, setMenuId] = useState(0);
-  
-  const [menuList, setMenuList] = useState<Menu[]>([]);  
-  const [orderList, setOrderList] = useState<Order[]>([]);
 
-  useEffect(() => {
-
-    const dataMenu = localStorage.getItem('MENU');
-    if (dataMenu) {
-      setMenuList(JSON.parse(dataMenu));
-    }
-
-    const dataOrder = localStorage.getItem('ORDER');
-    if (dataOrder) {
-      setOrderList(JSON.parse(dataOrder));
-    }
-
-  }, [])
-  
 
   function handleOrder(e:React.FormEvent, id:number){
     e.preventDefault();

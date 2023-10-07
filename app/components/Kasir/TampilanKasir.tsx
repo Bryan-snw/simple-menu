@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react'
 import rupiah from '@/app/utils/rupiah'
 import { Order, Menu } from '@/app/utils/type'
 
+interface AppProps {
+  menuList: Menu[];
+  orderList: Order[];
+  setOrderList:any;
+}
+
 function checkActiveTable(existOrders:any){
   let obj:any = {};
 
@@ -15,50 +21,15 @@ function checkActiveTable(existOrders:any){
   return Object.keys(obj);
 }
 
-const TampilanKasir = (props:any) => {
-  const {reset, setReset} = props;
+const TampilanKasir = ({menuList, orderList, setOrderList}:AppProps) => {
+  
 
   const [isPrint, setIsPrint] = useState(false);
-  const [nomorMeja, setNomorMeja] = useState(0);
-  const [orderList, setOrderList] = useState<Order[]>([]); 
-  const [menuList, setMenuList] = useState<Menu[]>([]); 
+  const [nomorMeja, setNomorMeja] = useState(0); 
   let totalHarga = 0;
   let item = 0;
 
-  useEffect(() => {
-
-    const dataMenu = localStorage.getItem('MENU');
-    if (dataMenu) {
-      setMenuList(JSON.parse(dataMenu));
-    }
-
-    const dataOrder = localStorage.getItem('ORDER');
-    if (dataOrder) {
-      setOrderList(JSON.parse(dataOrder));
-    }
-
-  }, [])
-
   const activeTables = checkActiveTable(orderList);
-
-  useEffect(() => {
-
-    if (reset) {
-
-      // Set Reset
-      setReset(false);
-      setNomorMeja(0);
-      setIsPrint(false);
-
-      // Get Item from local Storage
-      setOrderList(JSON.parse(localStorage.getItem('ORDER')||"[]"));
-      
-    }
-  }, [reset, setReset]);
-
-  useEffect(() => {
-    localStorage.setItem('ORDER', JSON.stringify(orderList));
-  }, [orderList])
 
   function renderStruk(){
     let orders:any = [];
@@ -138,7 +109,7 @@ const TampilanKasir = (props:any) => {
         
       </div>
 
-      {isPrint ?
+      {isPrint === true && nomorMeja != 0 ?
          (<>     
           <table className="w-full mt-4">
             <thead>
