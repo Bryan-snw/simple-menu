@@ -26,8 +26,10 @@ export default function Home() {
             nama: "Ayam Goreng",
             harga: 15000
         },
-  ]  
+  ];  
 
+  const [isPrint, setIsPrint] = useState(false);
+  const [nomorMeja, setNomorMeja] = useState(0); 
   const [reset, setReset] = useState(false);
   const [type, setType] =  useState('menu');
   const [menuList, setMenuList] = useState<Menu[]>(defaultMenu);  
@@ -105,9 +107,13 @@ export default function Home() {
           orderList={orderList} 
         />
       case 'kasir':
-        return <TampilanKasir 
+        return <TampilanKasir
+          isPrint={isPrint}
+          nomorMeja={nomorMeja} 
           menuList={menuList}
           orderList={orderList}
+          setIsPrint={setIsPrint}
+          setNomorMeja={setNomorMeja}
           setOrderList={setOrderList}
         />
     }
@@ -124,6 +130,8 @@ export default function Home() {
     setMenuList(defaultMenu);
     setOrderList([]);
     setReset(true);
+    setNomorMeja(0);
+    setIsPrint(false);
   }
 
   return (

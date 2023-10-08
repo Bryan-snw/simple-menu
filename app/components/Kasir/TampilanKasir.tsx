@@ -3,9 +3,13 @@ import rupiah from '@/app/utils/rupiah'
 import { Order, Menu } from '@/app/utils/type'
 
 interface AppProps {
+  isPrint: boolean;
+  nomorMeja: number;
   menuList: Menu[];
   orderList: Order[];
   setOrderList:any;
+  setIsPrint: any;
+  setNomorMeja: any;
 }
 
 function checkActiveTable(existOrders:any){
@@ -21,26 +25,26 @@ function checkActiveTable(existOrders:any){
   return Object.keys(obj);
 }
 
-const TampilanKasir = ({menuList, orderList, setOrderList}:AppProps) => {
+const TampilanKasir = ({isPrint, nomorMeja, menuList, orderList, setOrderList, setIsPrint, setNomorMeja}:AppProps) => {
   
 
-  const [isPrint, setIsPrint] = useState(false);
-  const [nomorMeja, setNomorMeja] = useState(0); 
+  // const [isPrint, setIsPrint] = useState(false);
+  // const [nomorMeja, setNomorMeja] = useState(0); 
   let totalHarga = 0;
-  let item = 0;
+  
 
   const activeTables = checkActiveTable(orderList);
 
   function renderStruk(){
     let orders:any = [];
     totalHarga = 0;
-    item = 0;
+    
     for (let index = 0; index < orderList.length; index++) {
       const order = orderList[index];
       if (order.mejaId === nomorMeja) {
         const menu = menuList.find(menu => menu.id === order.menuId);
         if (menu){
-          item++;
+          
           totalHarga += menu.harga*order.jumlah;
           orders.push(<tr key={index}>
             <td>{order.jumlah}</td>
