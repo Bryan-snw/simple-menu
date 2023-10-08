@@ -4,7 +4,6 @@ import { Menu } from '@/app/utils/type'
 
 interface AppProps {
   menuList: Menu[];
-
   setMenuList:any;
 }
   
@@ -13,9 +12,6 @@ const TampilanMenu = ({menuList, setMenuList}:AppProps) => {
     const [namaMakanan,setNamaMakanan] = useState("");
     const [hargaMakanan,setHargaMakanan] = useState(0);  
       
-
-    
-   
     function handleAddMenu(e:React.FormEvent) {
       e.preventDefault();
 
